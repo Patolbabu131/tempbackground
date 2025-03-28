@@ -5,10 +5,14 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const Course = require('../models/Course');
+const cloudinary = require('cloudinary').v2;
 
-// -------------------------
-// Multer Setup for Video Upload
-// -------------------------
+
+cloudinary.config({
+  cloud_name: 'dfzc3y02q',
+  api_key: '547314421329991',
+  api_secret: 'tJftfxehcNr9eEHnYCfIYIfsDqo'
+});
 
 // Define the directory for video uploads (relative to project root)
 const uploadDir = path.join(__dirname, '../uploads/videos');
@@ -97,7 +101,7 @@ router.get('/:id', async (req, res) => {
 // Create lesson with video upload using custom filename format
 router.post('/uploadLesson', upload.single('video'), async (req, res) => {
   console.log(`Incoming request to create a lesson: ${JSON.stringify(req.body)}`);
-
+  console.log('Cloudinary configured with cloud name:', 'dfzc3y02q');
   try {
     // Extract form fields from the request body
     const { title, content, course, duration, order } = req.body;
