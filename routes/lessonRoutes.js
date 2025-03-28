@@ -57,7 +57,7 @@ router.get('/', async (req, res) => {
     const lessons = await Lesson.find().populate('course');
     res.json({
       success: true,
-      message: 'Lessons retrieved successfully.',
+      message: 'Chapters retrieved successfully.',
       data: lessons
     });
   } catch (error) {
@@ -75,12 +75,12 @@ router.get('/:id', async (req, res) => {
     if (!lesson) {
       return res.status(404).json({
         success: false,
-        error: 'Lesson not found'
+        error: 'Chapter not found'
       });
     }
     res.json({
       success: true,
-      message: 'Lesson retrieved successfully.',
+      message: 'Chapter retrieved successfully.',
       data: lesson
     });
   } catch (error) {
@@ -110,7 +110,7 @@ router.post('/uploadLesson', upload.single('video'), async (req, res) => {
     // Check if a lesson with the same title already exists for the course
     const existingLesson = await Lesson.findOne({ title, course });
     if (existingLesson) {
-      return res.status(400).json({ success: false, message: 'Lesson title already exists for this course.' });
+      return res.status(400).json({ success: false, message: 'Chapter title already exists for this course.' });
     }
     
     // Generate a sanitized filename (this will be used as the public_id in Cloudinary)
@@ -142,7 +142,7 @@ router.post('/uploadLesson', upload.single('video'), async (req, res) => {
     await lesson.save();
     await Course.findByIdAndUpdate(course, { $push: { lessons: lesson._id } });
     
-    res.status(201).json({ success: true, message: 'Lesson created successfully.', data: lesson });
+    res.status(201).json({ success: true, message: 'Chapter created successfully.', data: lesson });
   } catch (error) {
     // If an error occurs, do not update the database
     res.status(400).json({ success: false, message: error.message });
@@ -158,7 +158,7 @@ router.get('/course/:courseId', async (req, res) => {
     const lessons = await Lesson.find({ course: courseId }).populate('course');
     res.json({
       success: true,
-      message: 'Lessons retrieved successfully.',
+      message: 'Chapters retrieved successfully.',
       data: lessons
     });
   } catch (error) {
@@ -181,12 +181,12 @@ router.put('/:id', async (req, res) => {
     if (!lesson) {
       return res.status(404).json({
         success: false,
-        error: 'Lesson not found'
+        error: 'Chapter not found'
       });
     }
     res.json({
       success: true,
-      message: 'Lesson updated successfully.',
+      message: 'Chapter updated successfully.',
       data: lesson
     });
   } catch (error) {
@@ -205,18 +205,14 @@ router.delete('/:id', async (req, res) => {
     if (!lesson) {
       return res.status(404).json({
         success: false,
-        error: 'Lesson not found'
+        error: 'Chapter not found'
       });
     }
-  
-    // Optionally: if you want to delete the video from Cloudinary,
-    // you can use the public_id stored along with the URL (if saved) to delete it.
-  
-    // Now delete the lesson from the database.
+
     await Lesson.findByIdAndDelete(req.params.id);
     res.json({
       success: true,
-      message: 'Lesson deleted successfully.',
+      message: 'Chapter deleted successfully.',
       data: {}
     });
   } catch (error) {
