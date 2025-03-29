@@ -10,7 +10,8 @@ const cloudinary = require('cloudinary').v2;
 cloudinary.config({
   cloud_name: 'dfzc3y02q',
   api_key: '547314421329991',
-  api_secret: 'tJftfxehcNr9eEHnYCfIYIfsDqo'
+  api_secret: 'tJftfxehcNr9eEHnYCfIYIfsDqo',
+  timeout: 5*60*1000 // 
 });
 
 // -------------------------
@@ -33,22 +34,19 @@ const upload = multer({ storage, fileFilter });
 // -------------------------
 // Helper: Upload to Cloudinary via stream
 // -------------------------
-const uploadToCloudinary = (buffer, filename) => {
+const uploadToCloudinary = (filePath, filename) => {
   return new Promise((resolve, reject) => {
-    const uploadStream = cloudinary.uploader.upload_stream(
-      {
-        resource_type: 'video',
-        folder: 'lessons_videos',
-        public_id: path.parse(filename).name, // optional: use file name (without ext) as public_id
-      },
-      (error, result) => {
-        if (result) resolve(result);
-        else reject(error);
-      }
-    );
-    uploadStream.end(buffer);
+    cloudinary.uploader.upload_large(filePath, {
+      resource_type: 'video',
+      folder: 'lessons_videos',
+      public_id: path.parse(filename).name,
+      chunk_size: 1 * 1024 * 1024, // 6MB per chunk
+    })
+    .then(resolve)
+    .catch(reject);
   });
 };
+
 
 
 
