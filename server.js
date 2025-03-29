@@ -25,18 +25,6 @@ app.use(cors({
     maxAge: 3600
 }));
 // Ensure CORS headers are set for all responses
-app.use(express.json({ limit: '50mb' }));
-app.use(express.urlencoded({ limit: '50mb', extended: true }));
-
-
-app.use((req, res, next) => {
-  res.setTimeout(1800000, () => {
-    console.log('Request has timed out.');
-    res.status(408).send('Request timed out');
-  });
-  next();
-});
-
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', req.headers.origin);
     res.header('Access-Control-Allow-Credentials', true);
