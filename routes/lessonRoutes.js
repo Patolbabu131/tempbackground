@@ -39,8 +39,7 @@ const uploadToCloudinary = (filePath, filename) => {
     cloudinary.uploader.upload_large(filePath, {
       resource_type: 'video',
       folder: 'lessons_videos',
-      public_id: path.parse(filename).name,
-      chunk_size: 1 * 1024 * 1024, // 6MB per chunk
+      public_id: path.parse(filename).name
     })
     .then(resolve)
     .catch(reject);
