@@ -8,7 +8,7 @@ const courseRoutes = require('./routes/courseRoutes');
 
 
  const lessonRoutes = require('./routes/lessonRoutes');
-
+ const questionRoutes = require('./routes/questionRoutes');
 
 dotenv.config();
 
@@ -46,7 +46,7 @@ app.use('/api/auth', authRoutes); // Register auth routes
 app.use('/api/courses', courseRoutes); // Register course routes
 app.use('/api/lessons', lessonRoutes); // Register course routes
 app.use('/uploads', express.static('uploads'));
-
+app.use('/api/questions', questionRoutes); // Register course routes
 
 const PORT = process.env.PORT || 3333;
 app.listen(PORT, () => {
