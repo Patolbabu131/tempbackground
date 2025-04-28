@@ -291,7 +291,7 @@ Generate from this paragraph:
     const llmRes = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
-        "Authorization": "Bearer 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",
+        "Authorization": "Bearer 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",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
