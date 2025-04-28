@@ -291,7 +291,7 @@ Generate from this paragraph:
     const llmRes = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
-        "Authorization": "Bearer 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",
+        "Authorization": "Bearer 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",
         "HTTP-Referer": "LearningStake.com", // Optional. Site URL for rankings on openrouter.ai.
         // "X-Title": "LearningStake", 
         // "Content-Type": "application/json"
